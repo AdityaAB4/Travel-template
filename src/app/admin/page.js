@@ -9,6 +9,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Image from "next/image";
 import EditPackageModal from "../components/EditPackageModal";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function page() {
   const { setUserRole } = useUser();
@@ -21,6 +22,7 @@ export default function page() {
 
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const getAllPackages = async () => {
     setLoading(true);
@@ -42,6 +44,36 @@ export default function page() {
     setEditingPackage(null);
   };
 
+  const handleDelete = async (id) => {
+    if (!id) return;
+
+    if (!confirm("Are you sure you want to delete this item?")) return;
+
+    setDeleteLoading(true);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/packages/delete/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        toast.success("Item deleted successfully!");
+        getAllPackages(); // Refresh the UI after deletion
+      } else {
+        toast.error(data.message || "Failed to delete item");
+        console.log(data.message || "Failed to delete item");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      // toast.error("Something went wrong!");
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   useEffect(() => {
     setRole("admin");
     getAllPackages();
@@ -51,13 +83,13 @@ export default function page() {
     <main>
       <Navbar />
       {!editingPackage && (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white text-gray-800">
           <div className="max-w-6xl mx-auto px-4">
             {/* <h1 className="my-4">
             {role === "admin" && <span>Welcome {role}</span>}
           </h1> */}
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold">Hot Deals 🔥</h2>
+              <h2 className="text-3xl font-bold">Hot Deals</h2>
               <a href="#" className="text-pink-600 hover:underline">
                 View All Offers
               </a>
@@ -83,8 +115,9 @@ export default function page() {
                           </button>
 
                           <button
-                            onClick={() => handleDelete(item.id)}
+                            onClick={() => handleDelete(item._id)}
                             className="text-red-600 hover:text-red-800"
+                            disabled={deleteLoading}
                           >
                             <FiTrash2 className="h-5 w-5" />
                           </button>
@@ -109,13 +142,14 @@ export default function page() {
                             item.disabled ? "opacity-50 grayscale" : ""
                           }`}
                         >
-                          <Image
-                            src={item?.imageUrl || null}
-                            width={400}
-                            height={300}
-                            alt={item?.packageName}
-                            className="object-cover"
-                          />
+                          <div className="relative h-50  pb-2/3">
+                            <Image
+                              src={item?.imageUrl || null}
+                              layout="fill"
+                              alt={item?.packageName}
+                              className="absolute w-full h-full object-cover"
+                            />
+                          </div>
                           <div className="p-4">
                             <div className="flex justify-between mb-2">
                               <span className="text-pink-600 font-bold">
@@ -160,6 +194,7 @@ export default function page() {
         />
       )}
       <Footer />
+      <ToastContainer />
     </main>
   );
 }
