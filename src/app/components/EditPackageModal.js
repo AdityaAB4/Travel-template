@@ -35,7 +35,7 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
     try {
       const response = await fetch(
         // `http://localhost:5000/api/packages/${packageData._id}`,
-        `https://travel-template-backend.onrender.com/api/packages/${packageData._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${packageData._id}`,
         {
           method: "PUT",
           body: formPayload,

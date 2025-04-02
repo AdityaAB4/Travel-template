@@ -35,7 +35,7 @@ const page = () => {
   const getAllPackages = async () => {
     setLoading(true);
     const result = await fetch(
-      "https://travel-template-backend.onrender.com/api/packages"
+      `${process.env.NEXT_PUBLIC_API_URL}/api/packages`
     );
     const packageData = await result.json();
     console.log(packageData, "data");

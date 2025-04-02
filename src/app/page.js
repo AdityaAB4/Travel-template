@@ -92,8 +92,92 @@ export default function Home() {
             </div>
           </div>
         </section> */}
+
+        {/* Offers */}
+        <section className="py-16 bg-white">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold">Hot Deals</h2>
+              <a href="#" className="text-pink-600 hover:underline">
+                View All Offers
+              </a>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {HOT_DEALS.map((item, i) => (
+                <div
+                  key={i}
+                  className="border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <Image
+                    src={item.url}
+                    width={400}
+                    height={300}
+                    alt="Special Offer"
+                  />
+                  <div className="p-4">
+                    <div className="flex justify-between mb-2">
+                      <span className="text-pink-600 font-bold">30% OFF</span>
+                      <span className="text-gray-500">5 days left</span>
+                    </div>
+                    <h3 className="font-bold mb-2">Luxury Bali Retreat</h3>
+                    <div className="flex justify-between items-center">
+                      <span className="text-2xl font-bold">$1599</span>
+                      <button className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700">
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section
+          className="relative h-screen bg-cover bg-center flex items-center justify-center text-white"
+          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-pink-400 bg-opacity-50"></div>
+          <div className="text-center relative z-10 px-4">
+            <h1 className="text-5xl font-bold mb-4">
+              Explore the World with Us
+            </h1>
+            <p className="text-lg mb-6">
+              Find the best travel destinations and make unforgettable memories.
+            </p>
+            <button className="bg-pink-500 px-6 py-3 rounded-full text-white text-lg shadow-lg hover:bg-pink-600">
+              Get Started
+            </button>
+          </div>
+        </section>
+
+        {/* Popular Destinations */}
+        {/* <section className="py-16 bg-gray-100">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-6">Popular Destinations</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {["Bali", "Paris", "Santorini"].map((destination, index) => (
+                <div
+                  key={index}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden"
+                >
+                  <img
+                    src={`/${destination.toLowerCase()}.jpg`}
+                    alt={destination}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold">{destination}</h3>
+                    <p className="text-gray-600 mt-2">
+                      A beautiful place to visit.
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section> */}
         {/* Trending destinations */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 text-gray-800">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">
               Trending Destinations
@@ -127,40 +211,43 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* Offers */}
-        <section className="py-16 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold">Hot Deals 🔥</h2>
-              <a href="#" className="text-pink-600 hover:underline">
-                View All Offers
-              </a>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {HOT_DEALS.map((item, i) => (
-                <div
-                  key={i}
-                  className="border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <Image
-                    src={item.url}
-                    width={400}
-                    height={300}
-                    alt="Special Offer"
-                  />
-                  <div className="p-4">
-                    <div className="flex justify-between mb-2">
-                      <span className="text-pink-600 font-bold">30% OFF</span>
-                      <span className="text-gray-500">5 days left</span>
-                    </div>
-                    <h3 className="font-bold mb-2">Luxury Bali Retreat</h3>
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold">$1599</span>
-                      <button className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700">
-                        Book Now
-                      </button>
-                    </div>
+
+        {/* Why Choose Us */}
+        <section className="py-16 bg-white text-gray-800">
+          <div className="max-w-6xl mx-4 sm:mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-6">Why Choose Us?</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {["Best Prices", "Expert Guides", "24/7 Support"].map(
+                (feature, index) => (
+                  <div
+                    key={index}
+                    className="p-6 bg-pink-200 rounded-lg shadow"
+                  >
+                    <h3 className="text-xl font-semibold">{feature}</h3>
+                    <p className="text-gray-800 mt-2">
+                      We ensure the best experience for our customers.
+                    </p>
                   </div>
+                )
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section className="py-16  text-gray-800">
+          <div className="max-w-6xl  mx-4 sm:mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-6">What Our Customers Say</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {["John Doe", "Jane Smith"].map((customer, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-100 p-6 shadow-lg rounded-lg"
+                >
+                  <p className="text-gray-600 italic">
+                    “Amazing experience! Will definitely book again.”
+                  </p>
+                  <h3 className="text-lg font-semibold mt-4">- {customer}</h3>
                 </div>
               ))}
             </div>

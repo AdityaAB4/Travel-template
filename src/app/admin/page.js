@@ -26,9 +26,7 @@ export default function page() {
 
   const getAllPackages = async () => {
     setLoading(true);
-    const result = await fetch(
-      "https://travel-template-backend.onrender.com/api/packages"
-    );
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`);
     const packageData = await result.json();
     console.log(packageData, "data");
     setPackages(packageData);
@@ -51,12 +49,9 @@ export default function page() {
 
     setDeleteLoading(true);
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/packages/delete/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/delete/${id}`, {
+        method: "DELETE",
+      });
 
       const data = await response.json();
       if (response.ok) {
