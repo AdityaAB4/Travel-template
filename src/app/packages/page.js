@@ -34,9 +34,7 @@ const page = () => {
 
   const getAllPackages = async () => {
     setLoading(true);
-    const result = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/packages`
-    );
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`);
     const packageData = await result.json();
     console.log(packageData, "data");
     setPackages(packageData);
@@ -62,7 +60,7 @@ const page = () => {
   return (
     <main>
       <Navbar />
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white max-h-max min-h-screen">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="my-4">
             {role === "admin" && <span>Welcome {role}</span>}
