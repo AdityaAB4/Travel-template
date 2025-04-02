@@ -68,7 +68,7 @@ export default function page() {
       }
     } catch (error) {
       console.error("Error deleting item:", error);
-      // toast.error("Something went wrong!");
+      toast.error("Something went wrong!");
     } finally {
       setDeleteLoading(false);
     }
