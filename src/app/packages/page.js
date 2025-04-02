@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 import { useUser } from "../contexts/UserContext";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Bars } from "react-loader-spinner";
 
 const page = () => {
   const { role } = useUser();
@@ -77,17 +76,7 @@ const page = () => {
             </a>
           </div>
           {loading ? (
-            <div className="flex items-center justify-center">
-              <Bars
-                height="50"
-                width="50"
-                color="#eb3480"
-                ariaLabel="bars-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-              />
-            </div>
+            <div className="flex items-center justify-center">Loading...</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {packages.length &&
