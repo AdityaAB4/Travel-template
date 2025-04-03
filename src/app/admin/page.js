@@ -11,6 +11,7 @@ import Image from "next/image";
 import EditPackageModal from "../components/EditPackageModal";
 import { toast, ToastContainer } from "react-toastify";
 import AuthContext from "../contexts/AuthContext";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export default function page() {
   const { user, logout } = useContext(AuthContext);
@@ -51,9 +52,12 @@ export default function page() {
 
     setDeleteLoading(true);
     try {
-      const response = await fetch(`${NEXT_PUBLIC_API_URL}/delete/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/delete/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
@@ -71,6 +75,10 @@ export default function page() {
     }
   };
 
+  const addPackageHandler = () => {
+    router.push("/AddPackage");
+  };
+
   useEffect(() => {
     if (!user || !user.isAdmin) {
       router.replace("/auth"); // Redirect unauthorized users
@@ -82,18 +90,33 @@ export default function page() {
   return (
     <main>
       <Navbar />
-      <button onClick={logout}>Logout</button>
+      <div className="flex justify-between items-center mx-4 sm:mx-auto my-4 max-w-6xl">
+        <button
+          className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
+          onClick={addPackageHandler}
+        >
+          <div className="flex items-center justify-center">
+            <IoMdAddCircleOutline /> &nbsp; Add Package
+          </div>
+        </button>
+        <button
+          className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      </div>
       {!editingPackage && (
-        <section className="py-16 bg-white text-gray-800">
+        <section className="py-16 bg-white text-gray-800 my-4">
           <div className="max-w-6xl mx-auto px-4">
             {/* <h1 className="my-4">
             {role === "admin" && <span>Welcome {role}</span>}
           </h1> */}
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold">Hot Deals</h2>
-              <a href="#" className="text-pink-600 hover:underline">
+              {/* <a href="#" className="text-pink-600 hover:underline">
                 View All Offers
-              </a>
+              </a> */}
             </div>
             {loading ? (
               <div className="flex items-center justify-center">Loading...</div>

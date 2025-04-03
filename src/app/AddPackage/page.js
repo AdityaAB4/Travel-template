@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/compat/router";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddPackagePage = () => {
   const router = useRouter();
@@ -45,31 +46,45 @@ const AddPackagePage = () => {
     formPayload.append("image", formData.image);
 
     try {
-      const response = await fetch(
-        "https://travel-template-backend.onrender.com/api/packages",
-        {
-          method: "POST",
-          body: formPayload,
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create package");
-      }
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+        method: "POST",
+        body: formPayload,
+      });
 
       const result = await response.json();
-      router.push(`/packages/${result._id}`);
+
+      if (!response.ok) {
+        toast.error(result.error);
+        throw new Error(result.error || "Failed to create package");
+      }
+
+      toast.success("Package created successfully!");
+
+      setTimeout(() => {
+        router.push("/admin");
+      }, 2000);
+
+      // router.push(`/packages/${result._id}`);
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const backClickHandler = () => {
+    router.back();
+  };
+
   return (
     <>
       <Navbar />
+      <div>
+        <button onClick={backClickHandler} className="mx-4 my-2 cursor-pointer">
+          <span className="text-pink-500 ">Back</span>
+        </button>
+      </div>
       <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">
@@ -214,6 +229,7 @@ const AddPackagePage = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };
