@@ -1,7 +1,4 @@
-import "./globals.css";
-import { UserProvider } from "./contexts/UserContext";
 import { Roboto } from "next/font/google";
-import { AuthProvider } from "./contexts/AuthContext";
 
 const gfont = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -36,10 +33,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${gfont.className}`}>
-        <AuthProvider>{children}</AuthProvider>
-      </body>
-    </html>
+    <div className={`${gfont.className}`}>
+      <>{children}</>
+    </div>
   );
 }

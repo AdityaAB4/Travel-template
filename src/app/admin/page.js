@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
@@ -10,8 +10,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Image from "next/image";
 import EditPackageModal from "../components/EditPackageModal";
 import { toast, ToastContainer } from "react-toastify";
+import AuthContext from "../contexts/AuthContext";
 
 export default function page() {
+  const { user, logout } = useContext(AuthContext);
   const { setUserRole } = useUser();
   const [code, setCode] = useState("admin");
   const [role, setRole] = useState("admin");
@@ -70,6 +72,9 @@ export default function page() {
   };
 
   useEffect(() => {
+    if (!user || !user.isAdmin) {
+      router.replace("/auth"); // Redirect unauthorized users
+    }
     setRole("admin");
     getAllPackages();
   }, []);
@@ -77,6 +82,7 @@ export default function page() {
   return (
     <main>
       <Navbar />
+      <button onClick={logout}>Logout</button>
       {!editingPackage && (
         <section className="py-16 bg-white text-gray-800">
           <div className="max-w-6xl mx-auto px-4">
