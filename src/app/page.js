@@ -46,53 +46,6 @@ export default function Home() {
       <Navbar />
       <main>
         <Carousel />
-        {/* Form */}
-        {/* <section className="bg-white py-16 px-4 shadow-lg -mt-10 relative z-20">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-pink-50 p-8 rounded-2xl shadow-md">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                Find Your Perfect Escape
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Destination
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Where to?"
-                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Travel Dates
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Travelers
-                  </label>
-                  <select className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                    <option>1 Traveler</option>
-                    <option>2 Travelers</option>
-                    <option>3+ Travelers</option>
-                  </select>
-                </div>
-                <div className="flex items-end">
-                  <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition-colors">
-                    Search Packages
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
-
         {/* Offers */}
         <section className="py-16 bg-white">
           <div className="max-w-6xl mx-auto px-4">
