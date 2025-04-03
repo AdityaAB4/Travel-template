@@ -27,7 +27,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between w-full lg:w-auto">
           <Link
             href="/"
-            className="flex title-font font-medium items-center text-gray-900"
+            className="flex title-font font-medium items-center text-gray-800"
           >
             <span className="text-xl text-pink-500 border border-pink-400 rounded-full px-2 py-1 hover:bg-pink-600 hover:text-white hover:top-0.5 transition-all duration-300 ease-in-out shadow-inner">
               Travel and Enjoy
@@ -98,7 +98,7 @@ export default function Navbar() {
             initial={{ x: "-100%" }}
             animate={{ x: isMenuOpen ? "0%" : "-100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-20 left-0 min-h-screen w-full bg-white text-gray-900 shadow-lg z-50"
+            className="fixed top-20 left-0 min-h-screen w-full bg-white text-gray-800 shadow-lg z-50"
           >
             {menuItems.map((item, index) => {
               return (
@@ -111,7 +111,7 @@ export default function Navbar() {
                   <div className="flex flex-col p-6 space-y-4 hover:bg-pink-200">
                     {item.menu}
                   </div>
-                  <hr />
+                  <hr className="border-t border-pink-500 border-width" />
                 </Link>
               );
             })}
