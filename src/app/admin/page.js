@@ -86,9 +86,9 @@ export default function page() {
   };
 
   useEffect(() => {
-    // if (!user || !user.isAdmin) {
-    //   router.replace("/auth"); // Redirect unauthorized users
-    // }
+    if (!user || !user.isAdmin) {
+      router.replace("/auth"); // Redirect unauthorized users
+    }
     setRole("admin");
     getAllPackages();
   }, []);
