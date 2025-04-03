@@ -12,6 +12,7 @@ import EditPackageModal from "../components/EditPackageModal";
 import { toast, ToastContainer } from "react-toastify";
 import AuthContext from "../contexts/AuthContext";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
 
 export default function page() {
   const { user, logout } = useContext(AuthContext);
@@ -103,7 +104,9 @@ export default function page() {
           className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
           onClick={logout}
         >
-          Logout
+          <div className="flex items-center justify-center">
+            Logout &nbsp; <FiLogOut />
+          </div>
         </button>
       </div>
       {!editingPackage && (
