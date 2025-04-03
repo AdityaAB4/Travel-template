@@ -13,6 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 import AuthContext from "../contexts/AuthContext";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
+import { MdViewCarousel } from "react-icons/md";
 
 export default function page() {
   const { user, logout } = useContext(AuthContext);
@@ -80,10 +81,14 @@ export default function page() {
     router.push("/AddPackage");
   };
 
+  const carouselMgmtHandler = () => {
+    router.push("/carousel-management");
+  };
+
   useEffect(() => {
-    if (!user || !user.isAdmin) {
-      router.replace("/auth"); // Redirect unauthorized users
-    }
+    // if (!user || !user.isAdmin) {
+    //   router.replace("/auth"); // Redirect unauthorized users
+    // }
     setRole("admin");
     getAllPackages();
   }, []);
@@ -91,7 +96,7 @@ export default function page() {
   return (
     <main>
       <Navbar />
-      <div className="flex justify-between items-center mx-4 sm:mx-auto my-4 max-w-6xl">
+      {/* <div className="flex justify-between items-center mx-4 sm:mx-auto my-4 max-w-6xl">
         <button
           className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
           onClick={addPackageHandler}
@@ -102,13 +107,47 @@ export default function page() {
         </button>
         <button
           className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
+          onClick={carouselMgmtHandler}
+        >
+          <div className="flex items-center justify-center">
+            <MdViewCarousel /> &nbsp; Carousel Management
+          </div>
+        </button>
+        <button
+          className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
           onClick={logout}
         >
           <div className="flex items-center justify-center">
             Logout &nbsp; <FiLogOut />
           </div>
         </button>
+      </div> */}
+      <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg border-t flex justify-around items-center py-3 sm:hidden z-20">
+        <button
+          className="flex flex-col items-center text-pink-600 hover:text-pink-700 transition-all"
+          onClick={addPackageHandler}
+        >
+          <IoMdAddCircleOutline className="text-2xl" />
+          <span className="text-xs mt-1">Add Package</span>
+        </button>
+
+        <button
+          className="flex flex-col items-center text-pink-600 hover:text-pink-700 transition-all"
+          onClick={carouselMgmtHandler}
+        >
+          <MdViewCarousel className="text-2xl" />
+          <span className="text-xs mt-1">Carousel</span>
+        </button>
+
+        <button
+          className="flex flex-col items-center text-pink-600 hover:text-pink-700 transition-all"
+          onClick={logout}
+        >
+          <FiLogOut className="text-2xl" />
+          <span className="text-xs mt-1">Logout</span>
+        </button>
       </div>
+
       {!editingPackage && (
         <section className="py-16 bg-white text-gray-800 my-4">
           <div className="max-w-6xl mx-auto px-4">
@@ -132,35 +171,33 @@ export default function page() {
                       className="border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow relative"
                     >
                       {/* Admin Actions */}
-                      {role === "admin" && (
-                        <div className="absolute top-2 right-2 flex space-x-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm z-10">
-                          <button
-                            onClick={() => setEditingPackage(item)}
-                            className="text-blue-600 hover:text-blue-800"
-                          >
-                            <FiEdit className="h-5 w-5" />
-                          </button>
+                      <div className="absolute top-2 right-2 flex space-x-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm z-10">
+                        <button
+                          onClick={() => setEditingPackage(item)}
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          <FiEdit className="h-5 w-5" />
+                        </button>
 
-                          <button
-                            onClick={() => handleDelete(item._id)}
-                            className="text-red-600 hover:text-red-800"
-                            disabled={deleteLoading}
-                          >
-                            <FiTrash2 className="h-5 w-5" />
-                          </button>
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="text-red-600 hover:text-red-800"
+                          disabled={deleteLoading}
+                        >
+                          <FiTrash2 className="h-5 w-5" />
+                        </button>
 
-                          <button
-                            onClick={() => handleToggleDisable(item.id)}
-                            className="text-yellow-600 hover:text-yellow-800"
-                          >
-                            {item.disabled ? (
-                              <FaEyeSlash className="h-5 w-5" />
-                            ) : (
-                              <FaEye className="h-5 w-5" />
-                            )}
-                          </button>
-                        </div>
-                      )}
+                        <button
+                          onClick={() => handleToggleDisable(item.id)}
+                          className="text-yellow-600 hover:text-yellow-800"
+                        >
+                          {item.disabled ? (
+                            <FaEyeSlash className="h-5 w-5" />
+                          ) : (
+                            <FaEye className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
 
                       {/* Card Content */}
                       {
