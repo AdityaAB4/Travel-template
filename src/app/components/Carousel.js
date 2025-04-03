@@ -21,24 +21,33 @@ const Carousel = () => {
   // ];
 
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchImages();
   }, []);
 
   const fetchImages = async () => {
+    setLoading(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/`);
       const data = await res.json();
       setImages(data);
+      setLoading(false);
       console.log(data, "images");
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching images:", error);
     }
   };
 
   return (
     <div className="relative w-full h-[600px]">
+      {loading && (
+        <div className="my-4 flex justify-center items-center text-gray-700">
+          Loading...
+        </div>
+      )}
       {images && images.length > 0 && (
         <Swiper
           spaceBetween={30}
