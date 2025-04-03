@@ -9,6 +9,7 @@ export default function Navbar() {
     { id: 1, link: "/packages", menu: "Packages" },
     { id: 2, link: "/about", menu: "About Us" },
     { id: 3, link: "/contact", menu: "Contact Us" },
+    { id: 4, link: "/admin", menu: "Admin" },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

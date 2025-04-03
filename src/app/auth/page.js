@@ -61,7 +61,9 @@ const Auth = () => {
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-pink-200 to-pink-400">
         <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
           <h2 className="text-2xl font-semibold text-pink-600 text-center mb-4">
-            {isSignup ? "Sign Up" : "Sign In"}
+            {isSignup
+              ? "Sign Up for Admin Use Only"
+              : "Sign In for Admin Use Only"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             {isSignup && (
