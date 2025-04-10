@@ -5,8 +5,10 @@ import { useParams } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 
 export default function PackageDetailsPage() {
+  const router = useRouter();
   const { id } = useParams();
   const [packageData, setPackageData] = useState(null);
 
@@ -20,6 +22,10 @@ export default function PackageDetailsPage() {
     if (id) fetchPackage();
   }, [id]);
 
+  const backClickHandler = () => {
+    router.back();
+  };
+
   if (!packageData) return <p>Loading...</p>;
 
   const formattedFrom = moment(packageData.travelDates?.from).format(
@@ -32,6 +38,11 @@ export default function PackageDetailsPage() {
   return (
     <>
       <Navbar />
+      <div>
+        <button onClick={backClickHandler} className="mx-4 my-2 cursor-pointer">
+          <span className="text-pink-500 ">Back</span>
+        </button>
+      </div>
       <div className="max-w-2xl mx-auto p-6 shadow-xl rounded-md bg-white">
         <img
           src={packageData.imageUrl}
