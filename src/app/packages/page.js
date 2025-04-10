@@ -4,11 +4,11 @@ import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Footer from "../components/Footer";
 import { useUser } from "../contexts/UserContext";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { role } = useUser();
+  const router = useRouter();
 
   const HOT_DEALS = [
     {
@@ -57,6 +57,10 @@ const page = () => {
     console.log("Toggle disable for:", id);
   };
 
+  const handleShowClick = (_id) => {
+    router.push(`/package-details/${_id}`);
+  };
+
   return (
     <main>
       <Navbar />
@@ -81,38 +85,9 @@ const page = () => {
                 packages.map((item, i) => (
                   <div
                     key={item?._id}
-                    className="border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow relative"
+                    className="cursor-pointer border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow relative"
+                    onClick={() => handleShowClick(item._id)}
                   >
-                    {/* Admin Actions */}
-                    {role === "admin" && (
-                      <div className="absolute top-2 right-2 flex space-x-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm z-10">
-                        <button
-                          onClick={() => handleEdit(item)}
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          <FiEdit className="h-5 w-5" />
-                        </button>
-
-                        <button
-                          onClick={() => handleDelete(item.id)}
-                          className="text-red-600 hover:text-red-800"
-                        >
-                          <FiTrash2 className="h-5 w-5" />
-                        </button>
-
-                        <button
-                          onClick={() => handleToggleDisable(item.id)}
-                          className="text-yellow-600 hover:text-yellow-800"
-                        >
-                          {item.disabled ? (
-                            <FaEyeSlash className="h-5 w-5" />
-                          ) : (
-                            <FaEye className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                    )}
-
                     {/* Card Content */}
                     {
                       <div
