@@ -5,6 +5,8 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { toast, ToastContainer } from "react-toastify";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 const AddPackagePage = () => {
   const router = useRouter();
@@ -87,7 +89,7 @@ const AddPackagePage = () => {
       </div>
       <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8">
             Add New Travel Package
           </h1>
 
@@ -165,22 +167,30 @@ const AddPackagePage = () => {
               </div>
 
               {/* Package Details */}
-              <div>
+              <div className="h-100">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Package Details
                 </label>
-                <textarea
+                <ReactQuill
+                  theme="snow"
+                  value={formData.packageDetails}
+                  onChange={(value) =>
+                    setFormData({ ...formData, packageDetails: value })
+                  }
+                  className="bg-white h-80"
+                />
+                {/* <textarea
                   value={formData.packageDetails}
                   onChange={(e) =>
                     setFormData({ ...formData, packageDetails: e.target.value })
                   }
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent h-32"
                   required
-                />
+                /> */}
               </div>
 
               {/* Image Upload */}
-              <div>
+              <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Package Image
                 </label>

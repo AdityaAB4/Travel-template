@@ -85,6 +85,10 @@ export default function page() {
     router.push("/carousel-management");
   };
 
+  const handleShowClick = (_id) => {
+    router.push(`/package-details/${_id}`);
+  };
+
   useEffect(() => {
     if (!user || !user.isAdmin) {
       router.replace("/auth"); // Redirect unauthorized users
@@ -96,7 +100,7 @@ export default function page() {
   return (
     <main>
       <Navbar />
-      {/* <div className="flex justify-between items-center mx-4 sm:mx-auto my-4 max-w-6xl">
+      <div className="hidden sm:flex justify-between items-center mx-4 sm:mx-auto sm:my-4 sm:max-w-6xl">
         <button
           className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 cursor-pointer"
           onClick={addPackageHandler}
@@ -121,7 +125,7 @@ export default function page() {
             Logout &nbsp; <FiLogOut />
           </div>
         </button>
-      </div> */}
+      </div>
       <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg border-t flex justify-around items-center py-3 sm:hidden z-20">
         <button
           className="flex flex-col items-center text-pink-600 hover:text-pink-700 transition-all"
@@ -155,7 +159,7 @@ export default function page() {
             {role === "admin" && <span>Welcome {role}</span>}
           </h1> */}
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold">Hot Deals</h2>
+              <h2 className="text-3xl font-bold">Admin</h2>
               {/* <a href="#" className="text-pink-600 hover:underline">
                 View All Offers
               </a> */}
@@ -188,7 +192,7 @@ export default function page() {
                         </button>
 
                         <button
-                          onClick={() => handleToggleDisable(item.id)}
+                          onClick={() => handleShowClick(item._id)}
                           className="text-yellow-600 hover:text-yellow-800"
                         >
                           {item.disabled ? (

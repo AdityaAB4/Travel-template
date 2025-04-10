@@ -3,6 +3,6 @@ export const metadata = {
   description: "Admin desc",
 };
 
-export default function AdminLayout({ children }) {
+export default function AddPackageLayout({ children }) {
   return <div className={``}>{children}</div>;
 }
