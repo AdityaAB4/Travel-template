@@ -5,6 +5,9 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import { useUser } from "../contexts/UserContext";
 import { useRouter } from "next/navigation";
+import { FiShare2 } from "react-icons/fi";
+import ShareModal from "../components/ShareModal";
+import { FaEye } from "react-icons/fa";
 
 const page = () => {
   const { role } = useUser();
@@ -31,6 +34,12 @@ const page = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editingPackage, setEditingPackage] = useState(null);
+  const [sharePackageUrl, setSharePackageUrl] = useState(null);
+
+  const handleOpenShareModal = (pkg) => {
+    const packageUrl = `${process.env.NEXT_PUBLIC_API_URL}/${pkg._id}`;
+    setSharePackageUrl(packageUrl);
+  };
 
   const getAllPackages = async () => {
     setLoading(true);
@@ -85,8 +94,7 @@ const page = () => {
                 packages.map((item, i) => (
                   <div
                     key={item?._id}
-                    className="cursor-pointer border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow relative"
-                    onClick={() => handleShowClick(item._id)}
+                    className=" border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow relative"
                   >
                     {/* Card Content */}
                     {
@@ -95,6 +103,28 @@ const page = () => {
                           item.disabled ? "opacity-50 grayscale" : ""
                         }`}
                       >
+                        <div className="absolute top-3 right-3 z-20 bg-pink-400 shadow-md rounded-2xl flex justify-center items-center px-2 py-2">
+                          <button onClick={() => handleOpenShareModal(item)}>
+                            <FiShare2
+                              size={20}
+                              className="text-gray-600 hover:text-white"
+                            />
+                            {/* <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-pink-500 text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+                              Share Package
+                            </div> */}
+                          </button>
+                        </div>
+                        <div className="absolute top-14 right-3 z-20 bg-pink-400 shadow-md rounded-2xl flex justify-center items-center px-2 py-2">
+                          <button onClick={() => handleShowClick(item._id)}>
+                            <FaEye
+                              size={20}
+                              className="text-gray-600 hover:text-white"
+                            />
+                            {/* <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-pink-500 text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+                              Share Package
+                            </div> */}
+                          </button>
+                        </div>
                         <div className="relative h-50  pb-2/3">
                           <Image
                             src={item?.imageUrl || null}
@@ -135,6 +165,12 @@ const page = () => {
           )}
         </div>
       </section>
+      {sharePackageUrl && (
+        <ShareModal
+          packageUrl={sharePackageUrl}
+          onClose={() => setSharePackageUrl(null)}
+        />
+      )}
       <Footer />
     </main>
   );
