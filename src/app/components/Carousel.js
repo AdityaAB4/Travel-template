@@ -64,18 +64,17 @@ const Carousel = () => {
         >
           {images.map((item, index) => (
             <SwiperSlide key={index}>
-              <div className="relative h-full w-full">
+              <div className="relative w-full h-[100vh]">
+                {" "}
+                {/* Adjust height as needed */}
                 <Image
-                  src={item?.imageUrl || null}
+                  src={item?.imageUrl || ""}
                   alt="Travel Package"
-                  width={1920}
-                  height={800}
+                  layout="fill"
                   className="object-cover"
-                  key={item?._id}
                 />
                 {/* Optional overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
                 {/* Optional text content */}
                 <div className="absolute bottom-20 left-10 text-white z-10">
                   <h2 className="text-4xl font-bold mb-4">
