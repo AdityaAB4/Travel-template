@@ -37,7 +37,7 @@ const page = () => {
   const [sharePackageUrl, setSharePackageUrl] = useState(null);
 
   const handleOpenShareModal = (pkg) => {
-    const packageUrl = `${process.env.NEXT_PUBLIC_API_URL}/${pkg._id}`;
+    const packageUrl = `https://travel-mvp-dev.vercel.app/package-details/${pkg._id}`;
     setSharePackageUrl(packageUrl);
   };
 

@@ -23,7 +23,7 @@ const ShareModal = ({ onClose, packageUrl }) => {
             rel="noopener noreferrer"
             className="bg-green-500 text-white px-4 py-2 rounded-lg text-center"
           >
-            <div class="flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <FaWhatsapp size={20} className="mx-2" />
               <span>Share on WhatsApp</span>
             </div>
@@ -34,7 +34,7 @@ const ShareModal = ({ onClose, packageUrl }) => {
             rel="noopener noreferrer"
             className="bg-blue-600 text-white px-4 py-2 rounded-lg text-center"
           >
-            <div class="flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <FaLinkedin size={20} className="mx-2" />
               <span>Share on LinkedIn</span>
             </div>
@@ -43,7 +43,7 @@ const ShareModal = ({ onClose, packageUrl }) => {
             href={`mailto:?subject=Travel Package&body=${shareText}%20${packageUrl}`}
             className="bg-red-500 text-white px-4 py-2 rounded-lg text-center"
           >
-            <div class="flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <MdOutlineEmail size={20} className="mx-2" />
               <span>Share via Email</span>
             </div>
@@ -55,7 +55,7 @@ const ShareModal = ({ onClose, packageUrl }) => {
             }}
             className="bg-gray-800 text-white px-4 py-2 rounded-lg"
           >
-            <div class="flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <MdOutlineContentCopy size={20} className="mx-2" />
               <span>Copy Link</span>
             </div>
