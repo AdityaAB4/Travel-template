@@ -40,12 +40,12 @@ export default function Footer() {
 
         <ul>
           <li className="hover:text-pink-500 my-1 text-center md:text-left">
-            <Link href="/pixel-to-cm">About us</Link>
+            <Link href="/about">About us</Link>
           </li>
         </ul>
         <ul className="">
           <li className="hover:text-pink-600 my-1 text-center md:text-left">
-            <Link href="/pixel-to-mm">Contact Us</Link>
+            <Link href="/contact">Contact Us</Link>
           </li>
 
           {/* <li className="hover:text-gray-600 my-1 text-center md:text-left">
