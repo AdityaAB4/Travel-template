@@ -20,6 +20,7 @@ const AddPackagePage = () => {
     packageDetails: "",
     image: null,
   });
+  const [itinerary, setItinerary] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -36,6 +37,16 @@ const AddPackagePage = () => {
     }
   };
 
+  const addItineraryDay = () => {
+    setItinerary([...itinerary, { title: "", description: "" }]);
+  };
+
+  const handleItineraryChange = (index, field, value) => {
+    const updated = [...itinerary];
+    updated[index][field] = value;
+    setItinerary(updated);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -48,6 +59,7 @@ const AddPackagePage = () => {
     formPayload.append("travelDatesTo", formData.travelDatesTo);
     formPayload.append("packageDetails", formData.packageDetails);
     formPayload.append("image", formData.image);
+    formPayload.append("itinerary", JSON.stringify(itinerary));
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
@@ -217,6 +229,50 @@ const AddPackagePage = () => {
                     </div>
                   )}
                 </div>
+              </div>
+              {/* Itinerary Section */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Itinerary
+                </label>
+
+                {itinerary.map((day, index) => (
+                  <div key={index} className="mb-4 border p-4 rounded-md">
+                    <p className="font-medium mb-2 text-pink-600">
+                      Day {index + 1}
+                    </p>
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      value={day.title}
+                      onChange={(e) =>
+                        handleItineraryChange(index, "title", e.target.value)
+                      }
+                      className="w-full p-2 mb-2 border rounded"
+                    />
+                    <textarea
+                      placeholder="Description"
+                      value={day.description}
+                      onChange={(e) =>
+                        handleItineraryChange(
+                          index,
+                          "description",
+                          e.target.value
+                        )
+                      }
+                      className="w-full p-2 border rounded"
+                      rows={3}
+                    />
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={addItineraryDay}
+                  className="mt-2 px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded"
+                >
+                  + Add Day
+                </button>
               </div>
 
               {/* Error Message */}

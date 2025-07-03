@@ -26,6 +26,10 @@ export async function generateMetadata({ params }) {
 export default async function PackagePage({ params }) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${params.id}`);
   const packageData = await res.json();
+  console.log(
+    packageData,
+    "PackageData---------------------------------///////////////"
+  );
 
   return <PackageClient packageData={packageData} />;
 }

@@ -1,9 +1,10 @@
 import "./globals.css";
 import { UserProvider } from "./contexts/UserContext";
-import { Roboto } from "next/font/google";
 import { AuthProvider } from "./contexts/AuthContext";
 
-const gfont = Roboto({ weight: "400", subsets: ["latin"] });
+import { Poppins } from "next/font/google";
+
+const gfont = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
   title: "Hotel",
