@@ -1,9 +1,18 @@
+"use client";
+import { useEffect, useState } from "react";
+
 import Navbar from "@/app/components/Navbar";
 import Image from "next/image";
 import Carousel from "./components/Carousel";
 import Footer from "./components/Footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+  const [packages, setPackages] = useState([]);
+
   const TRENDING_IMAGES = [
     {
       url: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1200&h=800&q=80",
@@ -41,6 +50,24 @@ export default function Home() {
       title: "Maldives Escape",
     },
   ];
+
+  const getAllPackages = async () => {
+    setLoading(true);
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`);
+    const packageData = await result.json();
+    console.log(packageData, "data");
+    setPackages(packageData);
+    setLoading(false);
+  };
+
+  const handleShowClick = (_id) => {
+    router.push(`/package-details/${_id}`);
+  };
+
+  useEffect(() => {
+    getAllPackages();
+  }, []);
+
   return (
     <main>
       <Navbar />
@@ -50,39 +77,46 @@ export default function Home() {
         <section className="py-16 bg-white">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold">Hot Deals</h2>
-              <a href="#" className="text-pink-600 hover:underline">
-                View All Offers
+              <h2 className="text-3xl font-bold">Latest Packages</h2>
+              <a href="/packages" className="text-pink-600 hover:underline">
+                View All Packages
               </a>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {HOT_DEALS.map((item, i) => (
-                <div
-                  key={i}
-                  className="border border-pink-400 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <Image
-                    src={item.url}
-                    width={400}
-                    height={300}
-                    alt="Special Offer"
-                  />
-                  <div className="p-4">
-                    <div className="flex justify-between mb-2">
-                      <span className="text-pink-600 font-bold">30% OFF</span>
-                      <span className="text-gray-500">5 days left</span>
-                    </div>
-                    <h3 className="font-bold mb-2">Luxury Bali Retreat</h3>
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold">$1599</span>
-                      <button className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700">
-                        Book Now
+
+            {loading ? (
+              <p className="text-center">Loading packages...</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {packages.map((pkg) => (
+                  <div
+                    key={pkg._id}
+                    className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+                  >
+                    <Image
+                      src={pkg.imageUrl}
+                      width={400}
+                      height={300}
+                      alt={pkg.packageName}
+                      className="w-full h-60 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-bold text-lg mb-1">
+                        {pkg.packageName}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-2">
+                        ₹{pkg.price.toLocaleString()}
+                      </p>
+                      <button
+                        onClick={() => handleShowClick(pkg._id)}
+                        className="cursor-pointer px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
+                      >
+                        View Details
                       </button>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
         <section
@@ -97,7 +131,7 @@ export default function Home() {
             <p className="text-lg mb-6">
               Find the best travel destinations and make unforgettable memories.
             </p>
-            <button className="bg-pink-500 px-6 py-3 rounded-full text-white text-lg shadow-lg hover:bg-pink-600">
+            <button className="cursor-pointer bg-pink-500 px-6 py-3 rounded-full text-white text-lg shadow-lg hover:bg-pink-600">
               Get Started
             </button>
           </div>
@@ -154,7 +188,7 @@ export default function Home() {
                     </h3>
                     <div className="flex justify-between text-white">
                       <span>From $999</span>
-                      <button className="px-4 py-2 bg-pink-600 rounded-lg hover:bg-pink-700">
+                      <button className="cursor-pointer px-4 py-2 bg-pink-600 rounded-lg hover:bg-pink-700">
                         Explore
                       </button>
                     </div>

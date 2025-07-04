@@ -59,7 +59,7 @@ export default function PackageDetailsClient({ packageData }) {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <button
           onClick={backClickHandler}
-          className="mb-6 text-pink-600 hover:text-pink-800 text-sm"
+          className="cursor-pointer mb-6 text-pink-600 hover:text-pink-800 text-sm"
         >
           ← Back
         </button>

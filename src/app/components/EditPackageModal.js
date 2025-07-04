@@ -242,7 +242,7 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
                 <button
                   type="button"
                   onClick={() => removeItineraryDay(index)}
-                  className="mt-2 text-sm text-red-600 border border-red-300 rounded-full px-3 py-1 hover:bg-red-100 flex items-center gap-1"
+                  className="mt-2 text-sm cursor-pointer text-red-600 border border-red-300 rounded-full px-3 py-1 hover:bg-red-100 flex items-center gap-1"
                 >
                   <FiTrash2 className="text-base" /> Remove
                 </button>
@@ -252,7 +252,7 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
             <button
               type="button"
               onClick={addItineraryDay}
-              className="mt-2 px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded"
+              className="mt-2 px-4 py-2 cursor-pointer bg-pink-500 hover:bg-pink-600 text-white rounded"
             >
               + Add Day
             </button>
@@ -262,13 +262,13 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2.5 text-gray-600 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg transition-colors"
+              className="px-6 py-2.5 cursor-pointer  text-gray-600 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors flex items-center gap-2"
+              className="px-6 py-2.5 cursor-pointer bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors flex items-center gap-2"
             >
               Save Changes
             </button>
