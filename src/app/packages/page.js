@@ -103,8 +103,11 @@ const page = () => {
                           item.disabled ? "opacity-50 grayscale" : ""
                         }`}
                       >
-                        <div className="absolute top-3 right-3 z-20 bg-pink-400 shadow-md rounded-2xl flex justify-center items-center px-2 py-2">
-                          <button onClick={() => handleOpenShareModal(item)}>
+                        <div className="absolute cursor-pointer  top-3 right-3 z-20 bg-pink-400 shadow-md rounded-2xl flex justify-center items-center px-2 py-2">
+                          <button
+                            onClick={() => handleOpenShareModal(item)}
+                            className="cursor-pointer"
+                          >
                             <FiShare2
                               size={20}
                               className="text-gray-600 hover:text-white"
@@ -114,8 +117,11 @@ const page = () => {
                             </div> */}
                           </button>
                         </div>
-                        <div className="absolute top-14 right-3 z-20 bg-pink-400 shadow-md rounded-2xl flex justify-center items-center px-2 py-2">
-                          <button onClick={() => handleShowClick(item._id)}>
+                        <div className="absolute cursor-pointer top-14 right-3 z-20 bg-pink-400 shadow-md rounded-2xl flex justify-center items-center px-2 py-2">
+                          <button
+                            onClick={() => handleShowClick(item._id)}
+                            className="cursor-pointer "
+                          >
                             <FaEye
                               size={20}
                               className="text-gray-600 hover:text-white"

@@ -1,17 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useRouter } from "next/navigation";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AuthContext from "../contexts/AuthContext";
+import EditPackageModal from "../components/EditPackageModal";
+
+import { toast, ToastContainer } from "react-toastify";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Image from "next/image";
-import EditPackageModal from "../components/EditPackageModal";
-import { toast, ToastContainer } from "react-toastify";
-import AuthContext from "../contexts/AuthContext";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
 import { MdViewCarousel } from "react-icons/md";
 
@@ -91,7 +93,7 @@ export default function page() {
 
   useEffect(() => {
     if (!user || !user.isAdmin) {
-      router.replace("/auth"); // Redirect unauthorized users
+      router.replace("/auth");
     }
     setRole("admin");
     getAllPackages();
@@ -178,14 +180,14 @@ export default function page() {
                       <div className="absolute top-2 right-2 flex space-x-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm z-10">
                         <button
                           onClick={() => setEditingPackage(item)}
-                          className="text-blue-600 hover:text-blue-800"
+                          className="cursor-pointer text-blue-600 hover:text-blue-800"
                         >
                           <FiEdit className="h-5 w-5" />
                         </button>
 
                         <button
                           onClick={() => handleDelete(item._id)}
-                          className="text-red-600 hover:text-red-800"
+                          className="cursor-pointer text-red-600 hover:text-red-800"
                           disabled={deleteLoading}
                         >
                           <FiTrash2 className="h-5 w-5" />
@@ -193,7 +195,7 @@ export default function page() {
 
                         <button
                           onClick={() => handleShowClick(item._id)}
-                          className="text-yellow-600 hover:text-yellow-800"
+                          className="cursor-pointer text-yellow-600 hover:text-yellow-800"
                         >
                           {item.disabled ? (
                             <FaEyeSlash className="h-5 w-5" />

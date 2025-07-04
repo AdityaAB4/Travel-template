@@ -2,11 +2,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
 import { toast, ToastContainer } from "react-toastify";
 import "react-quill-new/dist/quill.snow.css";
-import dynamic from "next/dynamic";
+
+import { FiMinus } from "react-icons/fi";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -39,6 +43,11 @@ const AddPackagePage = () => {
 
   const addItineraryDay = () => {
     setItinerary([...itinerary, { title: "", description: "" }]);
+  };
+
+  const removeItineraryDay = (indexToRemove) => {
+    const updated = itinerary.filter((_, i) => i !== indexToRemove);
+    setItinerary(updated);
   };
 
   const handleItineraryChange = (index, field, value) => {
@@ -263,13 +272,21 @@ const AddPackagePage = () => {
                       className="w-full p-2 border rounded"
                       rows={3}
                     />
+                    <button
+                      type="button"
+                      onClick={() => removeItineraryDay(index)}
+                      className="flex items-center gap-1 cursor-pointer px-2 py-1 text-sm text-red-600 border border-red-300 rounded-full hover:bg-red-100"
+                    >
+                      <FiMinus className="text-base" />
+                      Remove
+                    </button>
                   </div>
                 ))}
 
                 <button
                   type="button"
                   onClick={addItineraryDay}
-                  className="mt-2 px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded"
+                  className="mt-2 px-4 py-2 cursor-pointer bg-pink-500 hover:bg-pink-600 text-white rounded"
                 >
                   + Add Day
                 </button>
@@ -287,7 +304,7 @@ const AddPackagePage = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-3 cursor-pointer bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? "Creating Package..." : "Create New Package"}
                 </button>

@@ -1,7 +1,13 @@
 import { useState } from "react";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
 import { FiEdit, FiTrash2, FiX } from "react-icons/fi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Image from "next/image";
+
+import "react-quill-new/dist/quill.snow.css";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
   console.log(packageData, "data");
@@ -20,6 +26,22 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
   });
 
   const [previewImage, setPreviewImage] = useState(null);
+  const [itinerary, setItinerary] = useState(packageData.itinerary || []);
+
+  const handleItineraryChange = (index, field, value) => {
+    const updated = [...itinerary];
+    updated[index][field] = value;
+    setItinerary(updated);
+  };
+
+  const addItineraryDay = () => {
+    setItinerary([...itinerary, { title: "", description: "" }]);
+  };
+
+  const removeItineraryDay = (index) => {
+    const updated = itinerary.filter((_, i) => i !== index);
+    setItinerary(updated);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +52,7 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
     formPayload.append("travelDatesFrom", formData.travelDatesFrom);
     formPayload.append("travelDatesTo", formData.travelDatesTo);
     formPayload.append("packageDetails", formData.packageDetails);
+    formPayload.append("itinerary", JSON.stringify(itinerary));
     if (formData.image) formPayload.append("image", formData.image);
 
     try {
@@ -76,7 +99,7 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition-colors"
+            className="text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
           >
             <FiX className="h-7 w-7" />
           </button>
@@ -153,13 +176,13 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
             <label className="block text-sm font-medium text-gray-700">
               Package Details
             </label>
-            <textarea
+            <ReactQuill
+              theme="snow"
               value={formData.packageDetails}
-              onChange={(e) =>
-                setFormData({ ...formData, packageDetails: e.target.value })
+              onChange={(value) =>
+                setFormData({ ...formData, packageDetails: value })
               }
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent h-32"
-              required
+              className="bg-white"
             />
           </div>
 
@@ -186,6 +209,53 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
                 </div>
               )}
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Itinerary
+            </label>
+
+            {itinerary.map((day, index) => (
+              <div key={index} className="mb-4 border p-4 rounded-md">
+                <p className="font-medium mb-2 text-pink-600">
+                  Day {index + 1}
+                </p>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={day.title}
+                  onChange={(e) =>
+                    handleItineraryChange(index, "title", e.target.value)
+                  }
+                  className="w-full p-2 mb-2 border rounded"
+                />
+                <textarea
+                  placeholder="Description"
+                  value={day.description}
+                  onChange={(e) =>
+                    handleItineraryChange(index, "description", e.target.value)
+                  }
+                  className="w-full p-2 border rounded"
+                  rows={3}
+                />
+                <button
+                  type="button"
+                  onClick={() => removeItineraryDay(index)}
+                  className="mt-2 text-sm text-red-600 border border-red-300 rounded-full px-3 py-1 hover:bg-red-100 flex items-center gap-1"
+                >
+                  <FiTrash2 className="text-base" /> Remove
+                </button>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={addItineraryDay}
+              className="mt-2 px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded"
+            >
+              + Add Day
+            </button>
           </div>
 
           <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
