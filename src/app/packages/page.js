@@ -87,7 +87,9 @@ const page = () => {
             </a>
           </div>
           {loading ? (
-            <div className="flex items-center justify-center">Loading...</div>
+            <div className="flex justify-center items-center my-8">
+              <div className="w-12 h-12 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {packages.length &&
@@ -157,7 +159,8 @@ const page = () => {
                                   ? "opacity-50 cursor-not-allowed"
                                   : ""
                               }`}
-                              disabled={item.disabled}
+                              onClick={() => handleShowClick(item._id)}
+                              // disabled={item.disabled}
                             >
                               Book Now
                             </button>

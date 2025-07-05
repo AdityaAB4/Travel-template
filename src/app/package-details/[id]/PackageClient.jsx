@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import InquiryForm from "@/app/components/InquiryForm";
+
 import moment from "moment";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { FiCheckCircle, FiXCircle } from "react-icons/fi";
-
-import InquiryForm from "@/app/components/InquiryForm";
+import { FiArrowLeft, FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 const ItineraryDay = ({ dayNumber, title, description }) => {
   const [expanded, setExpanded] = useState(false);
@@ -70,9 +71,10 @@ export default function PackageDetailsClient({ packageData }) {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <button
           onClick={backClickHandler}
-          className="cursor-pointer mb-6 text-pink-600 hover:text-pink-800 text-sm"
+          className="flex items-center gap-2 cursor-pointer mb-6 text-pink-600 hover:text-pink-800 text-sm"
         >
-          ← Back
+          <FiArrowLeft className="text-lg" />
+          Back
         </button>
 
         <div className="flex flex-col lg:flex-row gap-8">

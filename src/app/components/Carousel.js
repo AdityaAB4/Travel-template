@@ -1,15 +1,15 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
+import SwiperCore from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useEffect, useState } from "react";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -21,7 +21,7 @@ const Carousel = () => {
   // ];
 
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchImages();
@@ -44,10 +44,11 @@ const Carousel = () => {
   return (
     <div className="relative w-full h-[600px]">
       {loading && (
-        <div className="my-4 flex justify-center items-center text-gray-700">
-          Loading...
+        <div className="flex justify-center items-center my-8">
+          <div className="w-12 h-12 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
         </div>
       )}
+
       {images && images.length > 0 && (
         <Swiper
           spaceBetween={30}
