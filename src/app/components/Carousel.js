@@ -1,24 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
-import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-// Import Swiper styles
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-SwiperCore.use([Autoplay, Navigation, Pagination]);
-
 const Carousel = () => {
-  // const images = [
-  //   "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=1920",
-  //   "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1920",
-  //   "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1920",
-  // ];
+  const router = useRouter();
 
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,67 +23,68 @@ const Carousel = () => {
   }, []);
 
   const fetchImages = async () => {
-    setLoading(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/`);
       const data = await res.json();
       setImages(data);
-      setLoading(false);
-      console.log(data, "images");
     } catch (error) {
-      setLoading(false);
       console.error("Error fetching images:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleShowClick = (_id) => {
+    router.push(`/packages`);
+  };
+
   return (
-    <div className="relative w-full h-[600px]">
-      {loading && (
-        <div className="flex justify-center items-center my-8">
+    <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px]">
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
           <div className="w-12 h-12 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
         </div>
-      )}
-
-      {images && images.length > 0 && (
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={true}
-          className="mySwiper h-full"
-        >
-          {images.map((item, index) => (
-            <SwiperSlide key={index}>
-              <div className="relative w-full h-[100vh]">
-                {" "}
-                {/* Adjust height as needed */}
-                <Image
-                  src={item?.imageUrl || ""}
-                  alt="Travel Package"
-                  layout="fill"
-                  className="object-cover"
-                />
-                {/* Optional overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                {/* Optional text content */}
-                <div className="absolute bottom-20 left-10 text-white z-10">
-                  <h2 className="text-4xl font-bold mb-4">
-                    Your Dream Vacation Starts Here
-                  </h2>
-                  <button className="px-6 py-3 bg-pink-600 hover:bg-pink-700 rounded-lg transition-colors">
-                    Learn More
-                  </button>
+      ) : (
+        images.length > 0 && (
+          <Swiper
+            spaceBetween={0}
+            centeredSlides={true}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            pagination={{ clickable: true }}
+            navigation={true}
+            modules={[Autoplay, Navigation, Pagination]}
+            className="h-full"
+          >
+            {images.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px]">
+                  <Image
+                    src={item?.imageUrl || ""}
+                    alt={item?.title || `Slide ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+                  <div className="absolute bottom-8 sm:bottom-16 left-4 sm:left-10 text-white z-20 max-w-xs sm:max-w-md">
+                    <h2 className="text-2xl sm:text-4xl font-bold mb-3 drop-shadow-lg">
+                      Your Dream Vacation Starts Here
+                    </h2>
+                    <button
+                      className="cursor-pointer px-5 py-2 sm:px-6 sm:py-3 bg-pink-600 hover:bg-pink-700 rounded-lg transition-colors text-sm sm:text-base"
+                      onClick={() => handleShowClick()}
+                    >
+                      View Packages
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )
       )}
     </div>
   );

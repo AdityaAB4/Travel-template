@@ -89,7 +89,7 @@ export default function Home() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {packages.map((pkg) => (
+                {packages.slice(0, 3).map((pkg) => (
                   <div
                     key={pkg._id}
                     className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
