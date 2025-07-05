@@ -22,6 +22,8 @@ const AddPackagePage = () => {
     travelDatesFrom: "",
     travelDatesTo: "",
     packageDetails: "",
+    inclusion: "",
+    exclusion: "",
     image: null,
   });
   const [itinerary, setItinerary] = useState([]);
@@ -69,6 +71,8 @@ const AddPackagePage = () => {
     formPayload.append("packageDetails", formData.packageDetails);
     formPayload.append("image", formData.image);
     formPayload.append("itinerary", JSON.stringify(itinerary));
+    formPayload.append("inclusion", formData.inclusion);
+    formPayload.append("exclusion", formData.exclusion);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
@@ -136,7 +140,6 @@ const AddPackagePage = () => {
                   required
                 />
               </div>
-
               {/* Price & Dates */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -188,7 +191,6 @@ const AddPackagePage = () => {
                   </div>
                 </div>
               </div>
-
               {/* Package Details */}
               <div className="h-100">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -210,6 +212,37 @@ const AddPackagePage = () => {
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent h-32"
                   required
                 /> */}
+              </div>
+              {/* Inclusion Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Inclusion
+                </label>
+                <textarea
+                  value={formData.inclusion}
+                  onChange={(e) =>
+                    setFormData({ ...formData, inclusion: e.target.value })
+                  }
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  rows={4}
+                  placeholder="e.g. Accommodation, Breakfast, Sightseeing..."
+                />
+              </div>
+
+              {/* Exclusion Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Exclusion
+                </label>
+                <textarea
+                  value={formData.exclusion}
+                  onChange={(e) =>
+                    setFormData({ ...formData, exclusion: e.target.value })
+                  }
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  rows={4}
+                  placeholder="e.g. Airfare, Personal Expenses..."
+                />
               </div>
 
               {/* Image Upload */}
@@ -291,14 +324,12 @@ const AddPackagePage = () => {
                   + Add Day
                 </button>
               </div>
-
               {/* Error Message */}
               {error && (
                 <div className="p-4 bg-red-50 text-red-700 rounded-lg">
                   Error: {error}
                 </div>
               )}
-
               {/* Submit Button */}
               <div className="pt-6 border-t border-gray-200">
                 <button

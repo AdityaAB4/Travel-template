@@ -1,12 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import moment from "moment";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { useState } from "react";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+
 import InquiryForm from "@/app/components/InquiryForm";
 
 const ItineraryDay = ({ dayNumber, title, description }) => {
@@ -41,6 +43,7 @@ const ItineraryDay = ({ dayNumber, title, description }) => {
 
 export default function PackageDetailsClient({ packageData }) {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState("inclusion");
 
   const backClickHandler = () => {
     router.back();
@@ -52,6 +55,14 @@ export default function PackageDetailsClient({ packageData }) {
   const formattedTo = moment(packageData.travelDates?.to).format(
     "MMMM D, YYYY"
   );
+
+  const inclusionList = packageData.inclusion
+    ? packageData.inclusion.split(/\r?\n/).filter(Boolean)
+    : [];
+
+  const exclusionList = packageData.exclusion
+    ? packageData.exclusion.split(/\r?\n/).filter(Boolean)
+    : [];
 
   return (
     <>
@@ -99,6 +110,67 @@ export default function PackageDetailsClient({ packageData }) {
                     }}
                   />
                 </div>
+
+                {/* Inclusion and Exclusion Tabs */}
+                {(packageData.inclusion?.length ||
+                  packageData.exclusion?.length) && (
+                  <div className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                      Inclusions & Exclusions
+                    </h2>
+
+                    <div className="flex space-x-4 mb-4">
+                      <button
+                        className={`cursor-pointer px-4 py-2 rounded ${
+                          activeTab === "inclusion"
+                            ? "bg-pink-600 text-white"
+                            : "bg-gray-200 text-gray-800"
+                        }`}
+                        onClick={() => setActiveTab("inclusion")}
+                      >
+                        Inclusion
+                      </button>
+                      <button
+                        className={`cursor-pointer px-4 py-2 rounded ${
+                          activeTab === "exclusion"
+                            ? "bg-pink-600 text-white"
+                            : "bg-gray-200 text-gray-800"
+                        }`}
+                        onClick={() => setActiveTab("exclusion")}
+                      >
+                        Exclusion
+                      </button>
+                    </div>
+
+                    {activeTab === "inclusion" && (
+                      <ul className="space-y-2">
+                        {inclusionList.map((item, index) => (
+                          <li
+                            key={index}
+                            className="flex items-start gap-2 text-gray-700"
+                          >
+                            <FiCheckCircle className="text-green-600 mt-1" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {activeTab === "exclusion" && (
+                      <ul className="space-y-2">
+                        {exclusionList.map((item, index) => (
+                          <li
+                            key={index}
+                            className="flex items-start gap-2 text-gray-700"
+                          >
+                            <FiXCircle className="text-red-500 mt-1" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
 
                 {/* Itinerary Section */}
                 {packageData.itinerary && packageData.itinerary.length > 0 && (
