@@ -10,7 +10,13 @@ import InquiryForm from "@/app/components/InquiryForm";
 import moment from "moment";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { FiArrowLeft, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import {
+  FiArrowLeft,
+  FiCheckCircle,
+  FiClock,
+  FiMapPin,
+  FiXCircle,
+} from "react-icons/fi";
 
 const ItineraryDay = ({ dayNumber, title, description }) => {
   const [expanded, setExpanded] = useState(false);
@@ -57,6 +63,13 @@ export default function PackageDetailsClient({ packageData }) {
     "MMMM D, YYYY"
   );
 
+  const totalDuration = `${packageData.days || 0} Days / ${
+    packageData.nights || 0
+  } Nights`;
+  const cities = packageData?.cities
+    ? packageData?.cities?.map((city) => city.trim())
+    : [];
+
   const inclusionList = packageData.inclusion
     ? packageData.inclusion.split(/\r?\n/).filter(Boolean)
     : [];
@@ -92,13 +105,38 @@ export default function PackageDetailsClient({ packageData }) {
                   {packageData.packageName}
                 </h1>
 
-                <div className="text-gray-700 mb-4">
+                <div className="text-gray-700 mb-6 space-y-1">
                   <p className="text-lg font-medium">
-                    Price: ₹{packageData.price}
+                    Price: ₹{packageData.price} / per person
                   </p>
                   <p className="text-sm text-gray-500">
                     Travel Dates: {formattedFrom} - {formattedTo}
                   </p>
+
+                  <div className="flex flex-wrap items-center gap-6 mt-2">
+                    {/* Duration with Clock Icon */}
+                    <div className="flex items-center gap-2 text-sm text-pink-600 font-semibold">
+                      <FiClock className="text-pink-500 text-base" />
+                      {totalDuration}
+                    </div>
+
+                    {/* Cities with Map Icon */}
+                    {cities.length > 0 && (
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <FiMapPin className="text-pink-500 text-base" />
+                        <div className="flex flex-wrap gap-2">
+                          {cities.map((city, idx) => (
+                            <span
+                              key={idx}
+                              className="bg-pink-100 text-pink-700 text-xs px-3 py-1 rounded-full border border-pink-300"
+                            >
+                              {city}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="mb-8">
@@ -121,22 +159,22 @@ export default function PackageDetailsClient({ packageData }) {
                       Inclusions & Exclusions
                     </h2>
 
-                    <div className="flex space-x-4 mb-4">
+                    <div className="flex mb-4 rounded-lg overflow-hidden border border-pink-200">
                       <button
-                        className={`cursor-pointer px-4 py-2 rounded ${
+                        className={`w-1/2 px-4 py-2 font-medium transition-colors border-gray-100 ${
                           activeTab === "inclusion"
                             ? "bg-pink-600 text-white"
-                            : "bg-gray-200 text-gray-800"
+                            : "bg-gray-50 text-gray-800"
                         }`}
                         onClick={() => setActiveTab("inclusion")}
                       >
                         Inclusion
                       </button>
                       <button
-                        className={`cursor-pointer px-4 py-2 rounded ${
+                        className={`w-1/2 px-4 py-2 font-medium transition-colors ${
                           activeTab === "exclusion"
                             ? "bg-pink-600 text-white"
-                            : "bg-gray-200 text-gray-800"
+                            : "bg-gray-50 text-gray-800"
                         }`}
                         onClick={() => setActiveTab("exclusion")}
                       >

@@ -25,6 +25,9 @@ const AddPackagePage = () => {
     inclusion: "",
     exclusion: "",
     image: null,
+    days: "",
+    nights: "",
+    cities: "",
   });
   const [itinerary, setItinerary] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
@@ -73,6 +76,9 @@ const AddPackagePage = () => {
     formPayload.append("itinerary", JSON.stringify(itinerary));
     formPayload.append("inclusion", formData.inclusion);
     formPayload.append("exclusion", formData.exclusion);
+    formPayload.append("days", formData.days);
+    formPayload.append("nights", formData.nights);
+    formPayload.append("cities", formData.cities);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
@@ -190,6 +196,58 @@ const AddPackagePage = () => {
                     />
                   </div>
                 </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Number of Days
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.days}
+                    onChange={(e) =>
+                      setFormData({ ...formData, days: e.target.value })
+                    }
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    min="1"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Number of Nights
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.nights}
+                    onChange={(e) =>
+                      setFormData({ ...formData, nights: e.target.value })
+                    }
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    min="0"
+                    required
+                  />
+                </div>
+              </div>
+              {/* Cities Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Cities{" "}
+                  <span className="text-sm text-gray-400">
+                    (comma separated)
+                  </span>
+                </label>
+                <textarea
+                  value={formData.cities}
+                  onChange={(e) =>
+                    setFormData({ ...formData, cities: e.target.value })
+                  }
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  rows={2}
+                  placeholder="e.g. Manali, Shimla, Kullu"
+                  required
+                />
               </div>
               {/* Package Details */}
               <div className="h-100">

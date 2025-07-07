@@ -22,6 +22,9 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
       .toISOString()
       .split("T")[0],
     packageDetails: packageData.packageDetails,
+    days: packageData.days || "",
+    nights: packageData.nights || "",
+    cities: packageData.cities || "",
     image: null,
   });
 
@@ -53,6 +56,9 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
     formPayload.append("travelDatesTo", formData.travelDatesTo);
     formPayload.append("packageDetails", formData.packageDetails);
     formPayload.append("itinerary", JSON.stringify(itinerary));
+    formPayload.append("days", formData.days);
+    formPayload.append("nights", formData.nights);
+    formPayload.append("cities", formData.cities);
     if (formData.image) formPayload.append("image", formData.image);
 
     try {
@@ -171,7 +177,49 @@ const EditPackageModal = ({ packageData, onClose, onUpdate }) => {
               />
             </div>
           </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Days
+              </label>
+              <input
+                type="number"
+                value={formData.days}
+                onChange={(e) =>
+                  setFormData({ ...formData, days: e.target.value })
+                }
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Nights
+              </label>
+              <input
+                type="number"
+                value={formData.nights}
+                onChange={(e) =>
+                  setFormData({ ...formData, nights: e.target.value })
+                }
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Cities Covered{" "}
+                <span className="text-gray-500 text-xs">(comma-separated)</span>
+              </label>
+              <input
+                type="text"
+                value={formData.cities}
+                onChange={(e) =>
+                  setFormData({ ...formData, cities: e.target.value })
+                }
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                placeholder="e.g. Manali, Shimla, Kullu"
+              />
+            </div>
+          </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Package Details
