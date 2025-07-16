@@ -48,7 +48,7 @@ export default function Navbar() {
               id="menu_btn"
               aria-label="menu_button"
               onClick={toggleMenu}
-              className="text-3xl text-pink-500  flex items-center justify-center w-10 h-10"
+              className="cursor-pointer text-3xl text-pink-500  flex items-center justify-center w-10 h-10"
             >
               <AnimatePresence mode="wait">
                 {isMenuOpen ? (

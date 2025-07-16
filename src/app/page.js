@@ -74,53 +74,53 @@ export default function Home() {
       <main>
         <Carousel />
         {/* Offers */}
-        <section className="py-16 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold">Latest Packages</h2>
-              <a href="/packages" className="text-pink-600 hover:underline">
-                View All Packages
-              </a>
-            </div>
+        {packages?.length > 0 && (
+          <section className="py-16 bg-white">
+            <div className="max-w-6xl mx-auto px-4">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-3xl font-bold">Latest Packages</h2>
+              </div>
 
-            {loading ? (
-              <div className="flex justify-center items-center my-8">
-                <div className="w-12 h-12 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {packages.slice(0, 3).map((pkg) => (
-                  <div
-                    key={pkg._id}
-                    className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
-                  >
-                    <Image
-                      src={pkg.imageUrl}
-                      width={400}
-                      height={300}
-                      alt={pkg.packageName}
-                      className="w-full h-60 object-cover"
-                    />
-                    <div className="p-4">
-                      <h3 className="font-bold text-lg mb-1">
-                        {pkg.packageName}
-                      </h3>
-                      <p className="text-sm text-gray-600 mb-2">
-                        ₹{pkg.price.toLocaleString()}
-                      </p>
-                      <button
-                        onClick={() => handleShowClick(pkg._id)}
-                        className="cursor-pointer px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
+              {loading ? (
+                <div className="flex justify-center items-center my-8">
+                  <div className="w-12 h-12 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {packages.length > 0 &&
+                    packages?.slice(0, 3).map((pkg) => (
+                      <div
+                        key={pkg._id}
+                        className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
                       >
-                        View Details
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
+                        <Image
+                          src={pkg.imageUrl}
+                          width={400}
+                          height={300}
+                          alt={pkg.packageName}
+                          className="w-full h-60 object-cover"
+                        />
+                        <div className="p-4">
+                          <h3 className="font-bold text-lg mb-1">
+                            {pkg.packageName}
+                          </h3>
+                          <p className="text-sm text-gray-600 mb-2">
+                            ₹{pkg.price.toLocaleString()}
+                          </p>
+                          <button
+                            onClick={() => handleShowClick(pkg._id)}
+                            className="cursor-pointer px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
         <section
           className="relative h-screen bg-cover bg-center flex items-center justify-center text-white"
           style={{ backgroundImage: "url('/hero-bg.jpg')" }}
