@@ -1,9 +1,21 @@
+import { headers } from "next/headers";
 import PackageClient from "./PackageClient";
 
 export async function generateMetadata({ params }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${params.id}`);
+  // Destructure id from params synchronously
+  const { id } = params;
+  const headersList = headers();
+  const host = headersList.get("host") || "";
+  const tenant = host.split(".")[0];
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${id}`, {
+    method: "GET",
+    headers: {
+      "X-Frontend-Domain": tenant,
+    },
+  });
+
   const packageData = await res.json();
-  console.log("packageData", packageData);
 
   return {
     title: `${packageData.packageName} | Travel Packages`,
@@ -24,7 +36,18 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PackagePage({ params }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${params.id}`);
+  const headersList = headers();
+  const host = headersList.get("host") || "";
+  const tenant = host.split(".")[0];
+  // const tenant = "localhost";
+  console.log("tenant", tenant);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${params.id}`, {
+    method: "GET",
+    headers: {
+      "X-Frontend-Domain": tenant,
+    },
+    cache: "no-store",
+  });
   const packageData = await res.json();
   console.log(
     packageData,

@@ -152,8 +152,8 @@ export default function PackageDetailsClient({ packageData }) {
                 </div>
 
                 {/* Inclusion and Exclusion Tabs */}
-                {(packageData.inclusion?.length ||
-                  packageData.exclusion?.length) && (
+                {(packageData.inclusion?.length > 0 ||
+                  packageData.exclusion?.length > 0) && (
                   <div className="mb-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                       Inclusions & Exclusions

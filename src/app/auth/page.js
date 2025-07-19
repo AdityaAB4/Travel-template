@@ -29,6 +29,7 @@ const Auth = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-Frontend-Domain": window.location.hostname,
         },
         body: JSON.stringify(formData),
       });

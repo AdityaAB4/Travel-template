@@ -84,6 +84,9 @@ const AddPackagePage = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
         method: "POST",
         body: formPayload,
+          headers: {
+          "X-Frontend-Domain": window.location.hostname,
+        },
       });
 
       const result = await response.json();

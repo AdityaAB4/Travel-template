@@ -53,7 +53,12 @@ export default function Home() {
 
   const getAllPackages = async () => {
     setLoading(true);
-    const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`);
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+      method: "GET",
+      headers: {
+        "X-Frontend-Domain": window.location.hostname,
+      },
+    });
     const packageData = await result.json();
     console.log(packageData, "data");
     setPackages(packageData);
