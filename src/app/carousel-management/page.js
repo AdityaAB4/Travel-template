@@ -25,7 +25,13 @@ export default function page() {
 
   const fetchImages = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/`, {
+        method: "GET",
+        headers: {
+          "X-Frontend-Domain": window.location.origin,
+          // "X-Frontend-Domain": "localhost",
+        },
+      });
       const data = await res.json();
       setImages(data);
     } catch (error) {
@@ -47,6 +53,10 @@ export default function page() {
       await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/add`, {
         method: "POST",
         body: formData,
+        headers: {
+          "X-Frontend-Domain": window.location.origin,
+          // "X-Frontend-Domain": "localhost",
+        },
       });
       fetchImages();
       setSelectedFile(null);
@@ -61,6 +71,10 @@ export default function page() {
     try {
       await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/delete/${id}`, {
         method: "DELETE",
+        headers: {
+          "X-Frontend-Domain": window.location.origin,
+          // "X-Frontend-Domain": "localhost",
+        },
       });
       fetchImages();
     } catch (error) {
@@ -148,7 +162,7 @@ export default function page() {
           <button
             onClick={handleUpload}
             disabled={loading}
-            className="bg-pink-500 text-white px-8 py-2 rounded shadow hover:bg-pink-600 disabled:opacity-50"
+            className="bg-pink-500 text-white cursor-pointer px-8 py-2 rounded shadow hover:bg-pink-600 disabled:opacity-50"
           >
             {loading ? (
               "Uploading..."
@@ -187,7 +201,7 @@ export default function page() {
                   />
                   <button
                     onClick={() => handleDelete(img._id)}
-                    className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded shadow-md hover:bg-red-600"
+                    className="cursor-pointer absolute top-2 right-2 bg-red-500 text-white p-2 rounded shadow-md hover:bg-red-600"
                   >
                     <div className="flex justify-center items-center">
                       <span>Delete &nbsp;</span>

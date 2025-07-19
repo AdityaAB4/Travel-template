@@ -24,7 +24,13 @@ const Carousel = () => {
 
   const fetchImages = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_CAROUSEL_URL}/`, {
+        method: "GET",
+        headers: {
+          "X-Frontend-Domain": window.location.origin,
+          // "X-Frontend-Domain": "localhost",
+        },
+      });
       const data = await res.json();
       setImages(data);
     } catch (error) {
